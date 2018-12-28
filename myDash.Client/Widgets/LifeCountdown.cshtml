@@ -1,0 +1,36 @@
+﻿@page "/lifecountdown"
+
+<div class="col-sm-6 col-lg-4">
+    <div class="card col-sm-12">
+        <div class="card-header">
+            <strong>@Header</strong>
+            <span class="fixed-right">Days to @EndAge <small class="text-muted">[@BirthDate.Month/@BirthDate.Year -> @BirthdayEnd.Year]</small></span>
+            <div class="progress justify-content-end">
+                <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: @($"{PercentLeft * 100}%");" aria-valuenow="@PercentLeft" aria-valuemin="0" aria-valuemax="1">@PercentLeft.ToString("P1")</div>
+            </div>
+        </div>
+        <div class="card-body">
+            <p class="card-text">@DaysLeft.ToString("N0") Days Left.</p>
+        </div>
+    </div>
+</div>
+
+@functions{
+    [Parameter] protected string Header { get; set; } = "John";
+    [Parameter] protected string BirthDay { get; set; } = "1975/07/24";
+    [Parameter] protected Int64 EndAge { get; set; } = 75;
+
+    public DateTime BirthDate { get; set; }
+    public int DaysLeft { get; set; }
+    public double PercentLeft { get; set; }
+    public DateTime BirthdayEnd { get; set; }
+
+    protected override async Task OnInitAsync()
+    {
+        BirthDate = DateTime.Parse(BirthDay);
+        BirthdayEnd = BirthDate.AddYears((int)EndAge);
+        var totalDays = BirthdayEnd.Subtract(BirthDate).TotalDays;
+        DaysLeft = (int)Math.Round(BirthdayEnd.Subtract(DateTime.Today).TotalDays, 0);
+        PercentLeft = (DaysLeft / totalDays);
+    }
+}

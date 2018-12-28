@@ -1,0 +1,13 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/myDash/DesignTimeBuild
+/.vs/myDash/v15/Server/sqlite3
+/.vs/myDash/v15/.suo
+/myDash.Client/bin/Debug/netstandard2.0
+/myDash.Client/obj
+/myDash.Server/bin/Debug/netcoreapp2.1
+/myDash.Server/obj
+/myDash.Shared/bin/Debug/netstandard2.0
+/myDash.Shared/obj

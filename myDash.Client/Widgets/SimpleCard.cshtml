@@ -1,0 +1,32 @@
+﻿@page "/simplecard"
+
+<div class="col-sm-@colsSmall col-lg-@colsLarge">
+    <div class="card col-sm-12">
+        <div class="card-header">
+            @if (!string.IsNullOrWhiteSpace(@Header))
+            {
+                <strong>@Header</strong>
+            }
+            @if (!string.IsNullOrWhiteSpace(@SubHeader))
+            {
+                <div>@SubHeader</div>
+            }
+            @*<div class="progress">
+                <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: @($"{PercentLeft * 100}%");" aria-valuenow="@PercentLeft" aria-valuemin="0" aria-valuemax="1">@PercentLeft.ToString("P1")</div>
+            </div>*@
+        </div>
+        <div class="card-body">
+            <p class="card-text">@Body</p>
+        </div>
+    </div>
+</div>
+
+@functions
+{
+    [Parameter] protected string Header { get; set; } = "Simple Card";
+    [Parameter] protected string SubHeader { get; set; } = "Sub Header";
+    [Parameter] protected string Body { get; set; } = "Body";
+    [Parameter] protected Int64 colsLarge { get; set; } = 4;
+    [Parameter] protected Int64 colsSmall { get; set; } = 6;
+
+}
