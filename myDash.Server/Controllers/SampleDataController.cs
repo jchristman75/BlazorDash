@@ -40,7 +40,19 @@ namespace myDash.Server.Controllers
                 new WidgetSettings() {widget = "LifeCountdown", parameters =  {{"Header","Rick"}, { "BirthDay", "2000/1/1"},{"EndAge", 90}}},
                 new WidgetSettings() {widget = "SimpleCard", parameters = {{"Header", "This is a simple card"}, {"SubHeader", ""},
                     { "Body","This is the body of my simple card.  There are other simple cards, but this is mine."},
-                    { "colsLarge", 6}, {"colsSmall", 12}}}
+                    { "colsLarge", 6}, {"colsSmall", 12}}},
+                new WidgetSettings() {widget = "Countdown", parameters =
+                {
+                    {"Header","Countdown to New Year" },
+                    {"From",$"{DateTime.Today.Year}/1/1"},
+                    {"To", $"{DateTime.Today.Year+1}/1/1"}
+                }},
+                new WidgetSettings() {widget = "Countdown", parameters =
+                {
+                {"Header","Countdown to July 4th" },
+                {"From",$"{DateTime.Today.Year}/7/4"},
+                {"To", $"{DateTime.Today.Year+1}/7/4"}
+                }}
             };
             return widgets;
         }

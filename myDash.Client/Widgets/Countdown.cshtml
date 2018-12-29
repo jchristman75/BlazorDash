@@ -1,0 +1,88 @@
+﻿@page "/countdown"
+@using System.Threading
+
+<div class="col-sm-@colsSmall col-lg-@colsLarge">
+    <div class="card col-sm-12">
+        <div class="card-header">
+            @if (!string.IsNullOrWhiteSpace(@Header))
+            {
+                <strong>@Header</strong>
+            }
+            @if (PercentLeft > 0)
+            {
+                <div class="progress">
+                    <div class="progress-bar bg-primary" role="progressbar" style="width: @($"{PercentLeft * 100}%");" aria-valuenow="@PercentLeft" aria-valuemin="0" aria-valuemax="1">@PercentLeft.ToString("P1")</div>
+                </div>
+            }
+        </div>
+        <div class="card-body">
+            <p class="card-text">@FormatTimeSpan(TimeLeft)</p>
+        </div>
+    </div>
+</div>
+
+@functions
+{
+    [Parameter] protected string Header { get; set; } = "Countdown";
+    [Parameter] protected string To { get; set; } = DateTime.Now.AddHours(16).ToString();
+    [Parameter] protected string From { get; set; } = DateTime.Now.AddDays(-5).ToString();
+    [Parameter] protected Int64 colsLarge { get; set; } = 6;
+    [Parameter] protected Int64 colsSmall { get; set; } = 12;
+
+    public TimeSpan TimeLeft { get; set; }
+    public double PercentLeft { get; set; } = 0.0;
+    public DateTime EndTime { get; set; }
+    public DateTime? StartTime { get; set; }
+
+    protected override async Task OnInitAsync()
+    {
+        EndTime = DateTime.Parse(To);
+        if (!string.IsNullOrEmpty(From))
+        {
+            StartTime = DateTime.Parse(From);
+        }
+        else
+        {
+            StartTime = null;
+        }
+
+        var timer = new Timer(new TimerCallback(_ =>
+        {
+            var timeNow = DateTime.Now;
+            TimeLeft = EndTime.Subtract(timeNow);
+            if (StartTime.HasValue)
+            {
+                var fromStart = timeNow.Subtract(StartTime.Value).TotalSeconds;
+                var total = EndTime.Subtract(StartTime.Value).TotalSeconds;
+                PercentLeft = fromStart / total;
+                StateHasChanged();
+            }
+        }), null, 1000, 1000);
+    }
+
+    //From stackoverflow - https://stackoverflow.com/a/41966914
+    private static string FormatTimeSpan(TimeSpan timeSpan)
+    {
+        Func<Tuple<int,string>, string> tupleFormatter = t => $"{t.Item1} {t.Item2}{(t.Item1 == 1 ? string.Empty : "s")}";
+        var components = new List<Tuple<int, string>>
+        {
+            Tuple.Create((int) timeSpan.TotalDays, "day"),
+            Tuple.Create(timeSpan.Hours, "hour"),
+            Tuple.Create(timeSpan.Minutes, "minute"),
+            Tuple.Create(timeSpan.Seconds, "second"),
+        };
+
+        components.RemoveAll(i => i.Item1 == 0);
+
+        string extra = "";
+
+        if (components.Count > 1)
+        {
+            var finalComponent = components[components.Count - 1];
+            components.RemoveAt(components.Count - 1);
+            extra = $" and {tupleFormatter(finalComponent)}";
+        }
+
+        return $"{string.Join(", ", components.Select(tupleFormatter))}{extra}";
+    }
+}
