@@ -1,0 +1,61 @@
+﻿@page "/canvas"
+@using System.Drawing
+@using System.Threading
+@using Blazor.Extensions
+
+<div class="col-sm-@colsSmall col-lg-@colsLarge">
+    <div class="card col-sm-12">
+        <BECanvas width="@width" height="@height" ref="@canvasReference"></BECanvas>
+    </div>
+</div>
+
+@functions
+{
+    [Parameter] protected Int64 colsLarge { get; set; } = 6;
+    [Parameter] protected Int64 colsSmall { get; set; } = 12;
+    [Parameter] protected long width { get; set; } = 400;
+    [Parameter] protected long height { get; set; } = 400;
+
+    private Canvas2dContext context;
+    protected BECanvasComponent canvasReference;
+
+    protected BouncingBall[] balls;
+
+    protected override void OnAfterRender()
+    {
+        context = canvasReference.CreateCanvas2d();
+
+        //start fresh
+        context.ClearRect(0,0,width,height);
+
+        foreach(var ball in balls)
+        {
+            context.BeginPath();
+            context.FillStyle = ball.color;
+            context.Arc(ball.X, ball.Y, ball.radius, 0, 2 * Math.PI, false);
+            context.Fill();
+            context.LineWidth = 1;
+            context.StrokeStyle = "black";
+            context.Stroke();
+        }
+    }
+
+    protected override async Task OnInitAsync()
+    {
+        //Use a single random seed to avoid overlap.
+        var rnd = new Random();
+
+        balls = new string[] {"orange", "green", "blue", "red", "white", "purple"}
+            .Select(color => new BouncingBall(color, width, height, rnd)).ToArray();
+
+        var timer = new Timer(new TimerCallback(_ =>
+        {
+            foreach (var ball in balls)
+            {
+                ball.Move();
+            }
+            StateHasChanged();
+        }), null, 0, 66);
+    }
+
+}

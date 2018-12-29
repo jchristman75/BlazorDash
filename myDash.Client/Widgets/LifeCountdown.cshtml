@@ -4,7 +4,7 @@
     <div class="card col-sm-12">
         <div class="card-header">
             <strong>@Header</strong>
-            <span class="fixed-right">Days to @EndAge <small class="text-muted">[@BirthDate.Month/@BirthDate.Year -> @BirthdayEnd.Year]</small></span>
+            <span class="float-right"> Days to @EndAge <small class="float-right text-muted">&nbsp;[@BirthdayEnd.Year]</small></span>
             <div class="progress justify-content-end">
                 <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: @($"{PercentLeft * 100}%");" aria-valuenow="@PercentLeft" aria-valuemin="0" aria-valuemax="1">@PercentLeft.ToString("P1")</div>
             </div>

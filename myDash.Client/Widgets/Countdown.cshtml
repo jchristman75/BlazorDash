@@ -16,7 +16,7 @@
             }
         </div>
         <div class="card-body">
-            <p class="card-text">@FormatTimeSpan(TimeLeft)</p>
+            <p class="card-text text-center font-weight-bold">@FormatTimeSpan(TimeLeft)</p>
         </div>
     </div>
 </div>
@@ -55,9 +55,9 @@
                 var fromStart = timeNow.Subtract(StartTime.Value).TotalSeconds;
                 var total = EndTime.Subtract(StartTime.Value).TotalSeconds;
                 PercentLeft = fromStart / total;
-                StateHasChanged();
             }
-        }), null, 1000, 1000);
+            StateHasChanged();
+        }), null, 0, 1000);
     }
 
     //From stackoverflow - https://stackoverflow.com/a/41966914

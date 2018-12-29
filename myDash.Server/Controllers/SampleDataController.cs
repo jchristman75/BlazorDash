@@ -32,12 +32,9 @@ namespace myDash.Server.Controllers
         {
             var widgets = new[]
             {
-                new WidgetSettings() {widget = "LifeCountdown", parameters =  {{"Header","Bob"},{"BirthDay", "1970/5/20"}}},
-                new WidgetSettings() {widget = "LifeCountdown", parameters =  {{"Header","Jim"}, { "BirthDay", "1985/8/1"}}},
-                new WidgetSettings() {widget = "LifeCountdown", parameters =  {{"Header","Rick"}, { "BirthDay", "2000/1/1"}}},
-                new WidgetSettings() {widget = "LifeCountdown", parameters =  {{"Header","Bob"}, { "BirthDay", "1970/5/20"},{"EndAge", 90}}},
-                new WidgetSettings() {widget = "LifeCountdown", parameters =  {{"Header","Jim"}, { "BirthDay", "1985/8/1"},{"EndAge", 90}}},
-                new WidgetSettings() {widget = "LifeCountdown", parameters =  {{"Header","Rick"}, { "BirthDay", "2000/1/1"},{"EndAge", 90}}},
+                new WidgetSettings() {widget = "LifeCountdown", parameters =  {{"Header","Jim"},{"BirthDay", "1970/1/1"}, { "EndAge", 70 }}},
+                new WidgetSettings() {widget = "LifeCountdown", parameters =  {{"Header","Bob"},{"BirthDay", "1990/7/4"},{ "EndAge", 75 }}},
+                new WidgetSettings() {widget = "LifeCountdown", parameters =  {{"Header","Rick"},{"BirthDay", "1985/4/27"},{ "EndAge", 80 }}},
                 new WidgetSettings() {widget = "SimpleCard", parameters = {{"Header", "This is a simple card"}, {"SubHeader", ""},
                     { "Body","This is the body of my simple card.  There are other simple cards, but this is mine."},
                     { "colsLarge", 6}, {"colsSmall", 12}}},
@@ -49,10 +46,11 @@ namespace myDash.Server.Controllers
                 }},
                 new WidgetSettings() {widget = "Countdown", parameters =
                 {
-                {"Header","Countdown to July 4th" },
-                {"From",$"{DateTime.Today.Year}/7/4"},
-                {"To", $"{DateTime.Today.Year+1}/7/4"}
-                }}
+                    {"Header","Countdown to July 4th" },
+                    {"From",$"{DateTime.Today.Year}/7/4"},
+                    {"To", $"{DateTime.Today.Year+1}/7/4"}
+                }},
+                new WidgetSettings() {widget = "CanvasWidget"}
             };
             return widgets;
         }
