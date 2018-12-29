@@ -42,7 +42,6 @@ namespace myDash.Client
             var margin = radius * 5;
             X = rnd.Next(margin, (int)(width - margin));
             Y = rnd.Next(margin, (int)(height - margin));
-            Console.WriteLine($"{X},{Y}");
             dirX = rnd.Next(5, 20) * Math.Sign(X - (width / 2)) * -1;
             dirY = rnd.Next(5, 20) * Math.Sign(Y - (width / 2)) * -1;
         }
