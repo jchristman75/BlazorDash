@@ -11,3 +11,4 @@
 /myDash.Server/obj
 /myDash.Shared/bin/Debug/netstandard2.0
 /myDash.Shared/obj
+*.suo
