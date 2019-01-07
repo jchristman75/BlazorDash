@@ -1,10 +1,11 @@
 ﻿@page "/lifecountdown"
+@using myDash.Shared
 
 <div class="col-sm-6 col-lg-4">
     <div class="card col-sm-12">
         <div class="card-header">
-            <strong>@Header</strong>
-            <span class="float-right"> Time left to age @EndAge <small class="float-right text-muted">&nbsp;[@BirthdayEnd.Year]</small></span>
+            <strong>@Settings.Header</strong>
+            <span class="float-right"> Time left to age @Settings.EndAge <small class="float-right text-muted">&nbsp;[@BirthdayEnd.Year]</small></span>
             <div class="progress justify-content-end">
                 <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: @($"{PercentLeft * 100}%");" aria-valuenow="@PercentLeft" aria-valuemin="0" aria-valuemax="1">@PercentLeft.ToString("P1")</div>
             </div>
@@ -16,20 +17,16 @@
 </div>
 
 @functions{
-    [Parameter] protected string Header { get; set; } = "John";
-    [Parameter] protected string BirthDay { get; set; } = "1975/07/24";
-    [Parameter] protected Int64 EndAge { get; set; } = 75;
+    [Parameter] protected LifeCountdownSetting Settings { get; set; } = new LifeCountdownSetting();
 
-    public DateTime BirthDate { get; set; }
     public int DaysLeft { get; set; }
     public double PercentLeft { get; set; }
     public DateTime BirthdayEnd { get; set; }
 
     protected override async Task OnInitAsync()
     {
-        BirthDate = DateTime.Parse(BirthDay);
-        BirthdayEnd = BirthDate.AddYears((int)EndAge);
-        var totalDays = BirthdayEnd.Subtract(BirthDate).TotalDays;
+        BirthdayEnd = Settings.BirthDate.AddYears(Settings.EndAge);
+        var totalDays = BirthdayEnd.Subtract(Settings.BirthDate).TotalDays;
         DaysLeft = (int)Math.Round(BirthdayEnd.Subtract(DateTime.Today).TotalDays, 0);
         PercentLeft = (DaysLeft / totalDays);
     }

@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
 using System.Linq;
 using System.Net.Mime;
+using Newtonsoft.Json;
 
 namespace myDash.Server
 {
@@ -15,7 +16,10 @@ namespace myDash.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            services.AddMvc().AddJsonOptions(options =>
+            {
+                options.SerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
+            }); ;
 
             services.AddResponseCompression(options =>
             {
