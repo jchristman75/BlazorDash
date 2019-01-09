@@ -43,13 +43,6 @@ namespace myDash.Server
 
         public WidgetSettingsBase Save(WidgetSettingsBase settings = null)
         {
-            //Refresh();
-            //Load/update item
-            if (settings != null)
-            {
-
-            }
-
             //Save to datastore.
             var items = JsonConvert.SerializeObject(widgets.ToArray(), jsonSettings);
             File.WriteAllText(storage, items);
