@@ -41,13 +41,11 @@ namespace myDash.Server
             }
         }
 
-        public WidgetSettingsBase Save(WidgetSettingsBase settings = null)
+        public void Save()
         {
             //Save to datastore.
             var items = JsonConvert.SerializeObject(widgets.ToArray(), jsonSettings);
             File.WriteAllText(storage, items);
-
-            return settings;
         }
 
         private WidgetSettingsBase[] LoadDefaults()
