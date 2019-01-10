@@ -7,5 +7,6 @@ namespace myDash.Server
     {
         IEnumerable<WidgetSettingsBase> GetWidgets();
         void Save();
+        void ReloadDefaults();
     }
 }

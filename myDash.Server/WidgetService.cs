@@ -36,16 +36,20 @@ namespace myDash.Server
 
             if (!(widgets?.Any() ?? false))
             {
-                widgets = new List<WidgetSettingsBase>(GetDefaults());
-                Save();
+                ReloadDefaults();            }
             }
-        }
 
         public void Save()
         {
             //Save to datastore.
             var items = JsonConvert.SerializeObject(widgets.ToArray(), jsonSettings);
             File.WriteAllText(storage, items);
+        }
+
+        public void ReloadDefaults()
+        {
+            widgets = new List<WidgetSettingsBase>(GetDefaults());
+            Save();
         }
 
         private WidgetSettingsBase[] GetDefaults()
