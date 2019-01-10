@@ -6,6 +6,6 @@ namespace myDash.Server
     public interface IWidgetService
     {
         IEnumerable<WidgetSettingsBase> GetWidgets();
-        WidgetSettingsBase Save(WidgetSettingsBase settings);
+        void Save();
     }
 }

@@ -36,7 +36,7 @@ namespace myDash.Server
 
             if (!(widgets?.Any() ?? false))
             {
-                widgets = new List<WidgetSettingsBase>(LoadDefaults());
+                widgets = new List<WidgetSettingsBase>(GetDefaults());
                 Save();
             }
         }
@@ -48,7 +48,7 @@ namespace myDash.Server
             File.WriteAllText(storage, items);
         }
 
-        private WidgetSettingsBase[] LoadDefaults()
+        private WidgetSettingsBase[] GetDefaults()
         {
             return new WidgetSettingsBase[]
             {
