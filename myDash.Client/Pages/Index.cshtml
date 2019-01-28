@@ -3,7 +3,7 @@
 @using Microsoft.AspNetCore.Blazor.RenderTree
 @using myDash.Shared
 @using Newtonsoft.Json
-@inject HttpClient Http
+@inherits IndexBase
 
 <head>
     <style>
@@ -23,51 +23,3 @@
         @CreateDynamicComponent();
     </div>
 </section>
-
-@functions {
-    WidgetSettingsBase[] widgets;
-    protected override async Task OnInitAsync()
-    {
-        widgets = JsonConvert.DeserializeObject<WidgetSettingsBase[]>(await Http.GetStringAsync("api/SampleData/widgets"),
-            new JsonSerializerSettings() {TypeNameHandling = TypeNameHandling.Auto});
-        StateHasChanged();
-    }
-
-    RenderFragment CreateDynamicComponent() => builder =>
-    {
-        if (widgets == null) return;
-
-        var assm = Assembly.GetExecutingAssembly();
-        var assmName = assm.GetName().Name;
-
-        foreach (var widget in widgets)
-        {
-            var widgetType = Type.GetType($"{assmName}.Widgets.{widget.widget}");
-            if (widgetType != null)
-            {
-                AddWidget(builder, widgetType, widget);
-            }
-        }
-    };
-
-    private static void AddWidget(RenderTreeBuilder builder, Type widget, WidgetSettingsBase settings)
-    {
-        var seq = 0;
-        builder.OpenComponent(seq, widget);
-
-        if (settings is WidgetSettings widgetSettings)
-        {
-            foreach (var param in widgetSettings.parameters)
-            {
-                seq++;
-                builder.AddAttribute(seq, param.Key, param.Value);
-            }
-        }
-        else
-        {
-            builder.AddAttribute(seq, "Settings", settings);
-        }
-        builder.CloseComponent();
-    }
-
-}
