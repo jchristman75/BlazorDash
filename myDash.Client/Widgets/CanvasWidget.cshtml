@@ -1,5 +1,8 @@
 ﻿@page "/canvas"
-@*@using System.Threading
+@using System.Threading
+@using Blazor.Extensions
+@using Blazor.Extensions.Canvas.Canvas2D
+@using Microsoft.AspNetCore.Components
 
 <div class="col-sm-@colsSmall col-lg-@colsLarge">
     <div class="card col-sm-12">
@@ -16,14 +19,14 @@
     [Parameter] protected long width { get; set; } = 400;
     [Parameter] protected long height { get; set; } = 400;
 
-    private Canvas2dContext context;
+    private Canvas2DContext context;
     protected BECanvasComponent canvasReference;
 
     protected BouncingBall[] balls;
 
     protected override void OnAfterRender()
     {
-        context = canvasReference.CreateCanvas2d();
+        context = canvasReference.CreateCanvas2D();
 
         //start fresh
         context.ClearRect(0,0,width,height);
@@ -58,4 +61,4 @@
         }), null, 0, 66);
     }
 
-}*@
+}

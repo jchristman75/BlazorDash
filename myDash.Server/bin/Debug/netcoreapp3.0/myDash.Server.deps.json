@@ -1003,7 +1003,8 @@
         "dependencies": {
           "Microsoft.AspNetCore.Blazor": "0.8.0-preview-19104-04",
           "Newtonsoft.Json": "12.0.1",
-          "myDash.Shared": "1.0.0"
+          "myDash.Shared": "1.0.0",
+          "Blazor.Extensions.Canvas": "0.1.0.0"
         },
         "runtime": {
           "myDash.Client.dll": {}
@@ -1018,6 +1019,14 @@
         },
         "compile": {
           "myDash.Shared.dll": {}
+        }
+      },
+      "Blazor.Extensions.Canvas.Reference/0.1.0.0": {
+        "runtime": {
+          "Blazor.Extensions.Canvas.dll": {
+            "assemblyVersion": "0.1.0.0",
+            "fileVersion": "0.1.0.0"
+          }
         }
       },
       "Microsoft.AspNetCore.Antiforgery/3.0.0.0": {
@@ -3223,6 +3232,11 @@
     },
     "myDash.Shared/1.0.0": {
       "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Blazor.Extensions.Canvas.Reference/0.1.0.0": {
+      "type": "reference",
       "serviceable": false,
       "sha512": ""
     },
