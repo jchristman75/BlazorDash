@@ -1,11 +1,6 @@
-using Microsoft.AspNetCore.Blazor.Server;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json.Serialization;
-using System.Linq;
-using System.Net.Mime;
 using Newtonsoft.Json;
 
 namespace myDash.Server
@@ -16,19 +11,12 @@ namespace myDash.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().AddJsonOptions(options =>
+            services.AddMvc().AddNewtonsoftJson(options =>
             {
                 options.SerializerSettings.TypeNameHandling = TypeNameHandling.Auto;
             }); ;
 
-            services.AddResponseCompression(options =>
-            {
-                options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[]
-                {
-                    MediaTypeNames.Application.Octet,
-                    WasmMediaTypeNames.Application.Wasm,
-                });
-            });
+            services.AddResponseCompression();
             services.AddSingleton<IWidgetService, WidgetService>();
         }
 
@@ -48,6 +36,7 @@ namespace myDash.Server
             });
 
             app.UseBlazor<Client.Startup>();
+            app.UseBlazorDebugging();
         }
     }
 }

@@ -3,14 +3,13 @@ using System.Net.Http;
 using System.Reflection;
 using System.Threading.Tasks;
 using myDash.Shared;
-using Microsoft.AspNetCore.Blazor;
-using Microsoft.AspNetCore.Blazor.Components;
-using Microsoft.AspNetCore.Blazor.RenderTree;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.RenderTree;
 using Newtonsoft.Json;
 
 namespace myDash.Client
 {
-    public class IndexBase : BlazorComponent
+    public class IndexBase : ComponentBase
     {
         [Inject]
         private HttpClient Http { get; set; }
