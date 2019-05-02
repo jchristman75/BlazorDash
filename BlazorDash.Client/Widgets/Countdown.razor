@@ -1,0 +1,74 @@
+﻿@page "/countdown"
+@using System.Threading
+@using Microsoft.AspNetCore.Components
+@using BlazorDash.Shared
+
+<div class="col-sm-@Settings.colsSmall col-lg-@Settings.colsLarge">
+    <div class="card col-sm-12">
+        <div class="card-header">
+            @if (!string.IsNullOrWhiteSpace(@Settings.Header))
+            {
+                <strong>@Settings.Header</strong>
+            }
+            @if (PercentLeft > 0)
+            {
+                <div class="progress">
+                    <div class="progress-bar bg-primary" role="progressbar" style="width: @($"{PercentLeft * 100}%");" aria-valuenow="@PercentLeft" aria-valuemin="0" aria-valuemax="1">@PercentLeft.ToString("P1")</div>
+                </div>
+            }
+        </div>
+        <div class="card-body">
+            <p class="card-text text-center font-weight-bold">@FormatTimeSpan(TimeLeft)</p>
+        </div>
+    </div>
+</div>
+
+@functions
+{
+    [Parameter] protected CountdownSetting Settings { get; set; } = new CountdownSetting();
+
+    public TimeSpan TimeLeft { get; set; }
+    public double PercentLeft { get; set; } = 0.0;
+
+    protected override async Task OnInitAsync()
+    {
+        var timer = new Timer(new TimerCallback(_ =>
+        {
+            var timeNow = DateTime.Now;
+            TimeLeft = Settings.EndTime.Subtract(timeNow);
+            if (Settings.StartTime.HasValue)
+            {
+                var fromStart = timeNow.Subtract(Settings.StartTime.Value).TotalSeconds;
+                var total = Settings.EndTime.Subtract(Settings.StartTime.Value).TotalSeconds;
+                PercentLeft = fromStart / total;
+            }
+            StateHasChanged();
+        }), null, 0, 1000);
+    }
+
+    //From stackoverflow - https://stackoverflow.com/a/41966914
+    private static string FormatTimeSpan(TimeSpan timeSpan)
+    {
+        Func<Tuple<int, string>, string> tupleFormatter = t => $"{t.Item1} {t.Item2}{(t.Item1 == 1 ? string.Empty : "s")}";
+        var components = new List<Tuple<int, string>>
+    {
+            Tuple.Create((int) timeSpan.TotalDays, "day"),
+            Tuple.Create(timeSpan.Hours, "hour"),
+            Tuple.Create(timeSpan.Minutes, "minute"),
+            Tuple.Create(timeSpan.Seconds, "second"),
+        };
+
+        components.RemoveAll(i => i.Item1 == 0);
+
+        string extra = "";
+
+        if (components.Count > 1)
+        {
+            var finalComponent = components[components.Count - 1];
+            components.RemoveAt(components.Count - 1);
+            extra = $" and {tupleFormatter(finalComponent)}";
+        }
+
+        return $"{string.Join(", ", components.Select(tupleFormatter))}{extra}";
+    }
+}

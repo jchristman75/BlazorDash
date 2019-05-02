@@ -1,0 +1,34 @@
+﻿@page "/lifecountdown"
+@using Microsoft.AspNetCore.Components
+@using BlazorDash.Shared
+
+<div class="col-sm-@Settings.colsSmall col-lg-@Settings.colsLarge">
+    <div class="card col-sm-12">
+        <div class="card-header">
+            <strong>@Settings.Header</strong>
+            <span class="float-right"> Time left to age @Settings.EndAge <small class="float-right text-muted">&nbsp;[@BirthdayEnd.Year]</small></span>
+            <div class="progress justify-content-end">
+                <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: @($"{PercentLeft * 100}%");" aria-valuenow="@PercentLeft" aria-valuemin="0" aria-valuemax="1">@PercentLeft.ToString("P1")</div>
+            </div>
+        </div>
+        <div class="card-body">
+            <p class="card-text">@DaysLeft.ToString("N0") Days Left.</p>
+        </div>
+    </div>
+</div>
+
+@functions{
+    [Parameter] protected LifeCountdownSetting Settings { get; set; } = new LifeCountdownSetting();
+
+    public int DaysLeft { get; set; }
+    public double PercentLeft { get; set; }
+    public DateTime BirthdayEnd { get; set; }
+
+    protected override async Task OnInitAsync()
+    {
+        BirthdayEnd = Settings.BirthDate.AddYears(Settings.EndAge);
+        var totalDays = BirthdayEnd.Subtract(Settings.BirthDate).TotalDays;
+        DaysLeft = (int)Math.Round(BirthdayEnd.Subtract(DateTime.Today).TotalDays, 0);
+        PercentLeft = (DaysLeft / totalDays);
+    }
+}

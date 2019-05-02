@@ -1,0 +1,29 @@
+﻿@page "/simplecard"
+@using Microsoft.AspNetCore.Components
+@using BlazorDash.Shared
+
+<div class="col-sm-@Settings.colsSmall col-lg-@Settings.colsLarge">
+    <div class="card col-sm-12">
+        <div class="card-header">
+            @if (!string.IsNullOrWhiteSpace(@Settings.Header))
+            {
+            <strong>@Settings.Header</strong>
+            }
+            @if (!string.IsNullOrWhiteSpace(@Settings.SubHeader))
+            {
+            <div>@Settings.SubHeader</div>
+            }
+            @*<div class="progress">
+                    <div class="progress-bar bg-success progress-bar-striped progress-bar-animated" role="progressbar" style="width: @($"{PercentLeft * 100}%");" aria-valuenow="@PercentLeft" aria-valuemin="0" aria-valuemax="1">@PercentLeft.ToString("P1")</div>
+                </div>*@
+        </div>
+        <div class="card-body">
+            <p class="card-text">@Settings.Body</p>
+        </div>
+    </div>
+</div>
+
+@functions
+{
+[Parameter] protected SimpleCardSetting Settings { get; set; } = new SimpleCardSetting();
+}

@@ -13,3 +13,11 @@
 /myDash.Shared/obj
 *.suo
 /.vs/myDash/v16/Server/sqlite3
+/.vs/BlazorDash/v16/Server/sqlite3
+/BlazorDash.Client/obj
+/BlazorDash.Client/BlazorDash.Client.csproj.user
+/BlazorDash.Server/obj
+/BlazorDash.Server/BlazorDash.Server.csproj.user
+/BlazorDash.Shared/bin/Debug/netstandard2.0
+/BlazorDash.Shared/obj
+/UpgradeLog.htm
