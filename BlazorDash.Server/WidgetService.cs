@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 
 namespace BlazorDash.Server
 {
+
     public class WidgetService : IWidgetService
     {
         private JsonSerializerSettings jsonSettings;
@@ -23,6 +24,39 @@ namespace BlazorDash.Server
         {
             return widgets;
         }
+
+        public WidgetSettingsBase GetWidget(Guid Id)
+        {
+            return widgets.FirstOrDefault(_ => _.Guid.Equals(Id));
+        }
+
+        public void AddOrUpdate(WidgetSettingsBase settings)
+        {
+            var savedSettings = widgets.FirstOrDefault(_ => _.Guid.Equals(settings.Guid));
+
+            if (savedSettings == null)
+            {
+                widgets.Add(settings);
+            }
+            else
+            {
+                widgets.Insert(widgets.IndexOf(savedSettings),settings);
+                widgets.Remove(savedSettings);
+            }
+            Save();
+        }
+
+        public bool Remove(Guid settingGuid)
+        {
+            var savedSettings = widgets.FirstOrDefault(_ => _.Guid.Equals(settingGuid));
+            if (savedSettings != null) return false;
+
+            widgets.Remove(savedSettings);
+            Save();
+
+            return true;
+        }
+
 
         private const string storage = @"widgets.json";
         public void Refresh()

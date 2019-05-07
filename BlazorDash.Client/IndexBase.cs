@@ -18,7 +18,7 @@ namespace BlazorDash.Client
         protected override async Task OnInitAsync()
         {
             Console.WriteLine("OnInitAsync");
-            widgets = JsonConvert.DeserializeObject<WidgetSettingsBase[]>(await Http.GetStringAsync("api/SampleData/widgets"),
+            widgets = JsonConvert.DeserializeObject<WidgetSettingsBase[]>(await Http.GetStringAsync("api/Widgets"),
                 new JsonSerializerSettings() { TypeNameHandling = TypeNameHandling.Auto });
             StateHasChanged();
         }

@@ -3,20 +3,12 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using BlazorDash.Server;
-using BlazorDash.Shared;
 
 namespace BlazorDash.Server.Controllers
 {
     [Route("api/[controller]")]
     public class SampleDataController : Controller
     {
-        private IWidgetService WidgetService;
-
-        public SampleDataController(IWidgetService widgetService)
-        {
-            this.WidgetService = widgetService;
-        }
 
         private static string[] Summaries = new[]
         {
@@ -33,12 +25,6 @@ namespace BlazorDash.Server.Controllers
                 TemperatureC = rng.Next(-20, 55),
                 Summary = Summaries[rng.Next(Summaries.Length)]
             });
-        }
-
-        [HttpGet("[action]")]
-        public IEnumerable<WidgetSettingsBase> widgets()
-        {
-            return WidgetService.GetWidgets();
         }
     }
 }
