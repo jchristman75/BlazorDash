@@ -7,59 +7,59 @@
 
 <div class="col-sm-@colsSmall col-lg-@colsLarge">
     <div class="card col-sm-12">
-        <div class="row justify-content-sm-center">
+        @*<div class="row justify-content-sm-center">
             <BlazorDash.Client.BECanvas width="@width" height="@height" ref="@canvasReference"></BlazorDash.Client.BECanvas>
-        </div>
+        </div>*@
     </div>
 </div>
 
-@functions
+@code
 {
-    [Parameter] protected Int64 colsLarge { get; set; } = 6;
-    [Parameter] protected Int64 colsSmall { get; set; } = 12;
-    [Parameter] protected long width { get; set; } = 400;
-    [Parameter] protected long height { get; set; } = 400;
+[Parameter] protected Int64 colsLarge { get; set; } = 6;
+[Parameter] protected Int64 colsSmall { get; set; } = 12;
+[Parameter] protected long width { get; set; } = 400;
+[Parameter] protected long height { get; set; } = 400;
 
-    private Canvas2DContext context;
-    protected BECanvasComponent canvasReference;
+//private Canvas2DContext context;
+//protected BECanvasComponent canvasReference;
 
-    protected BouncingBall[] balls;
+//protected BouncingBall[] balls;
 
-    protected override async void OnAfterRender()
-    {
-        context = await canvasReference.CreateCanvas2DAsync();
+//protected override async void OnAfterRender()
+//{
+//    context = await canvasReference.CreateCanvas2DAsync();
 
-        //start fresh
-        await context.ClearRectAsync(0, 0, width, height);
+//    //start fresh
+//    await context.ClearRectAsync(0, 0, width, height);
 
-        foreach (var ball in balls)
-        {
-            await context.BeginPathAsync();
-            await context.SetFillStyleAsync(ball.color);
-            await context.ArcAsync(ball.X, ball.Y, ball.radius, 0, 2 * Math.PI, false);
-            await context.FillAsync();
-            await context.SetLineWidthAsync(1);
-            await context.SetStrokeStyleAsync("black");
-            await context.StrokeAsync();
-        }
-    }
+//    foreach (var ball in balls)
+//    {
+//        await context.BeginPathAsync();
+//        await context.SetFillStyleAsync(ball.color);
+//        await context.ArcAsync(ball.X, ball.Y, ball.radius, 0, 2 * Math.PI, false);
+//        await context.FillAsync();
+//        await context.SetLineWidthAsync(1);
+//        await context.SetStrokeStyleAsync("black");
+//        await context.StrokeAsync();
+//    }
+//}
 
-    protected override async Task OnInitAsync()
-    {
-        //Use a single random seed to avoid overlap.
-        var rnd = new Random();
+//protected override async Task OnInitAsync()
+//{
+//    //Use a single random seed to avoid overlap.
+//    var rnd = new Random();
 
-        var ballList = new List<BouncingBall>();
-        for (var i = 0; i < 15; i++)
-        {
-            ballList.Add(new BouncingBall($"#{rnd.Next(0, 256)}{rnd.Next(0, 256)}{rnd.Next(0, 256)}", width, height, rnd));
-        }
-        balls = ballList.ToArray();
+//    var ballList = new List<BouncingBall>();
+//    for (var i = 0; i < 15; i++)
+//    {
+//        ballList.Add(new BouncingBall($"#{rnd.Next(0, 256)}{rnd.Next(0, 256)}{rnd.Next(0, 256)}", width, height, rnd));
+//    }
+//    balls = ballList.ToArray();
 
-        var timer = new Timer(new TimerCallback(_ =>
-        {
-            balls.AdjustPositions();
-            StateHasChanged();
-        }), null, 0, 66);
-    }
+//    var timer = new Timer(new TimerCallback(_ =>
+//    {
+//        balls.AdjustPositions();
+//        StateHasChanged();
+//    }), null, 0, 66);
+//}
 }

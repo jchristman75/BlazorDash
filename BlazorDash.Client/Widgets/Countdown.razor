@@ -12,8 +12,8 @@
             }
             @if (PercentLeft > 0)
             {
-                <div class="progress">
-                    <div class="progress-bar bg-primary" role="progressbar" style="width: @($"{PercentLeft * 100}%");" aria-valuenow="@PercentLeft" aria-valuemin="0" aria-valuemax="1">@PercentLeft.ToString("P1")</div>
+                <div class="progress" style="background-color: #aaa">
+                    <div class="progress-bar bg-info" role="progressbar" style="width: @($"{PercentLeft * 100}%");" aria-valuenow="@PercentLeft" aria-valuemin="0" aria-valuemax="1">@PercentLeft.ToString("P1")</div>
                 </div>
             }
         </div>
@@ -23,7 +23,7 @@
     </div>
 </div>
 
-@functions
+@code
 {
     [Parameter] protected CountdownSetting Settings { get; set; } = new CountdownSetting();
 
